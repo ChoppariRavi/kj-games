@@ -42,9 +42,15 @@ export default function TicTocToe() {
       if (!pKeys.length) {
         const emptyCells = initArr.filter((i) => !spots[i]);
         const shuffled = shuffle(emptyCells);
-        const corners = shuffled.filter((i) => [0, 2, 6, 8].includes(i));
+        const nextArr = spots[4] === 'C' ? [1, 3, 5, 7] : [0, 2, 6, 8];
+        const corners = shuffled.filter((i) => nextArr.includes(i));
         const idx = corners.length ? corners[0] : shuffled[0];
-        setSpots((prev) => ({ ...prev, [idx]: "C" }));
+        if (!spots[4]) {
+          setSpots((prev) => ({ ...prev, 4: "C" }));
+        } else {
+          setSpots((prev) => ({ ...prev, [idx]: "C" }));
+        }
+        
       } else if (pKeys.length === 1) {
         setSpots((prev) => ({ ...prev, [possibilitites[pKeys[0]]]: "C" }));
       } else {
